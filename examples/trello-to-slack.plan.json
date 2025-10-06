@@ -1,0 +1,52 @@
+{
+  "name": "Trello → Slack Notify",
+  "trigger": {
+    "kind": "app_trigger",
+    "piece": "trello",
+    "triggerName": "new_card",
+    "inputs": {
+      "boardId": "<ASK_USER: Trello board ID>",
+      "listId": "<ASK_USER: Trello list ID>"
+    }
+  },
+  "steps": [
+    {
+      "kind": "piece_action",
+      "piece": "slack",
+      "actionName": "send_message",
+      "inputs": {
+        "channel": "<ASK_USER: Slack channel>",
+        "text": "{{trigger.card.name}}"
+      }
+    }
+  ],
+  "enableAfterBuild": true,
+  "__needsOptions": [
+    {
+      "piece": "trello",
+      "targetType": "trigger",
+      "targetName": "new_card",
+      "property": "boardId"
+    },
+    {
+      "piece": "trello",
+      "targetType": "trigger",
+      "targetName": "new_card",
+      "property": "listId"
+    }
+  ],
+  "checklist": [
+    {
+      "field": "trello.boardId",
+      "description": "Select the Trello board to monitor"
+    },
+    {
+      "field": "trello.listId",
+      "description": "Select the Trello list inside the chosen board"
+    },
+    {
+      "field": "slack.channel",
+      "description": "Slack channel to notify"
+    }
+  ]
+}

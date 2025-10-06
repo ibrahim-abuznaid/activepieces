@@ -1,0 +1,41 @@
+{
+  "name": "Webhook → Email Transformer",
+  "trigger": {
+    "kind": "webhook",
+    "inputs": {
+      "authType": "none"
+    }
+  },
+  "steps": [
+    {
+      "kind": "code",
+      "name": "Transform",
+      "language": "ts",
+      "sourceCode": "export async function run({ text }: { text: string }) {\n  return { upper: text?.toUpperCase?.() ?? '' };\n}\n",
+      "inputs": {
+        "text": "{{trigger.body.text}}"
+      }
+    },
+    {
+      "kind": "piece_action",
+      "piece": "gmail",
+      "actionName": "send_email",
+      "inputs": {
+        "to": "<ASK_USER: Recipient email>",
+        "subject": "Webhook update",
+        "body": "Processed: {{steps.Transform.upper}}"
+      }
+    }
+  ],
+  "enableAfterBuild": true,
+  "checklist": [
+    {
+      "field": "gmail.connection",
+      "description": "Connect the Gmail account to send emails"
+    },
+    {
+      "field": "gmail.to",
+      "description": "Provide the destination email address"
+    }
+  ]
+}
