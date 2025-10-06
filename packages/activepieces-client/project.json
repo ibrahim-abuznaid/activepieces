@@ -1,0 +1,32 @@
+{
+  "name": "flowpilot-activepieces-client",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/activepieces-client/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/activepieces-client",
+        "main": "packages/activepieces-client/src/index.ts",
+        "tsConfig": "packages/activepieces-client/tsconfig.lib.json",
+        "assets": [],
+        "buildableProjectDepsInPackageJsonType": "dependencies",
+        "updateBuildableProjectDepsInPackageJson": true
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/activepieces-client/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}
