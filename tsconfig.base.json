@@ -17,6 +17,15 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@flowpilot/activepieces-client": [
+        "packages/activepieces-client/src/index.ts"
+      ],
+      "@flowpilot/flow-builder": [
+        "packages/flow-builder/src/index.ts"
+      ],
+      "@flowpilot/planner": [
+        "packages/planner/src/index.ts"
+      ],
       "@activepieces/common-ai": [
         "packages/pieces/community/common-ai/src/index.ts"
       ],

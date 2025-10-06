@@ -1,0 +1,16 @@
+{
+  "name": "@flowpilot/planner",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "src/index.ts",
+  "module": "src/index.ts",
+  "types": "src/index.ts",
+  "sideEffects": false,
+  "private": true,
+  "dependencies": {
+    "@flowpilot/activepieces-client": "workspace:*",
+    "@flowpilot/flow-builder": "workspace:*",
+    "@activepieces/pieces-framework": "workspace:*",
+    "zod": "^3.25.76"
+  }
+}
