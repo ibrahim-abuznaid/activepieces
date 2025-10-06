@@ -22,6 +22,10 @@ src="https://github.com/activepieces/activepieces/assets/1812998/76c97441-c285-4
    An open source replacement for Zapier
 </p>
 
+> ### FlowPilot – AI Flow Builder
+>
+> We now ship **FlowPilot**, a code-driven copilot that plans and builds ActivePieces flows from natural language prompts. See [FLOWPILOT.md](./FLOWPILOT.md) for environment setup, CLI usage, and the Trello→Slack and Webhook→Email demos.
+
 <p align="center">
   <a
     href="https://www.activepieces.com/docs"

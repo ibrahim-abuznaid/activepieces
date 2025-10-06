@@ -1,0 +1,17 @@
+{
+  "name": "@flowpilot/cli",
+  "version": "0.1.0",
+  "type": "module",
+  "bin": {
+    "flowpilot": "dist/apps/cli/main.js"
+  },
+  "private": true,
+  "dependencies": {
+    "@flowpilot/activepieces-client": "workspace:*",
+    "@flowpilot/flow-builder": "workspace:*",
+    "@flowpilot/planner": "workspace:*",
+    "chalk": "^4.1.2",
+    "commander": "^11.1.0",
+    "dotenv": "^16.4.5"
+  }
+}

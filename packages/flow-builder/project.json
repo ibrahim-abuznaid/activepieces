@@ -1,0 +1,32 @@
+{
+  "name": "flowpilot-flow-builder",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/flow-builder/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/flow-builder",
+        "main": "packages/flow-builder/src/index.ts",
+        "tsConfig": "packages/flow-builder/tsconfig.lib.json",
+        "assets": [],
+        "buildableProjectDepsInPackageJsonType": "dependencies",
+        "updateBuildableProjectDepsInPackageJson": true
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/flow-builder/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}
