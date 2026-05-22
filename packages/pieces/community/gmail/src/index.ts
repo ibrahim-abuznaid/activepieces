@@ -13,6 +13,32 @@ import { gmailSearchMailAction } from './lib/actions/search-email-action';
 import { gmailGetEmailAction } from './lib/actions/get-mail-action';
 import { gmailAuth, getAccessToken, GmailAuthValue } from './lib/auth';
 
+import { listMessages } from './lib/actions/atomic/list-messages';
+import { getMessage } from './lib/actions/atomic/get-message';
+import { trashMessage } from './lib/actions/atomic/trash-message';
+import { untrashMessage } from './lib/actions/atomic/untrash-message';
+import { deleteMessage } from './lib/actions/atomic/delete-message';
+import { archiveMessage } from './lib/actions/atomic/archive-message';
+import { markAsRead } from './lib/actions/atomic/mark-as-read';
+import { markAsUnread } from './lib/actions/atomic/mark-as-unread';
+import { addLabel } from './lib/actions/atomic/add-label';
+import { removeLabel } from './lib/actions/atomic/remove-label';
+import { listLabels } from './lib/actions/atomic/list-labels';
+import { createLabel } from './lib/actions/atomic/create-label';
+import { deleteLabel } from './lib/actions/atomic/delete-label';
+import { updateLabel } from './lib/actions/atomic/update-label';
+import { getThread } from './lib/actions/atomic/get-thread';
+import { listThreads } from './lib/actions/atomic/list-threads';
+import { trashThread } from './lib/actions/atomic/trash-thread';
+import { listDrafts } from './lib/actions/atomic/list-drafts';
+import { createDraft } from './lib/actions/atomic/create-draft';
+import { sendDraft } from './lib/actions/atomic/send-draft';
+import { deleteDraft } from './lib/actions/atomic/delete-draft';
+import { getProfile } from './lib/actions/atomic/get-profile';
+import { getAttachment } from './lib/actions/atomic/get-attachment';
+import { batchModify } from './lib/actions/atomic/batch-modify';
+import { triageInbox } from './lib/actions/composite/triage-inbox';
+
 export {
   gmailAuth,
   getAccessToken,
@@ -41,6 +67,31 @@ export const gmail = createPiece({
         Authorization: `Bearer ${await getAccessToken(auth as GmailAuthValue)}`,
       }),
     }),
+    listMessages,
+    getMessage,
+    trashMessage,
+    untrashMessage,
+    deleteMessage,
+    archiveMessage,
+    markAsRead,
+    markAsUnread,
+    addLabel,
+    removeLabel,
+    listLabels,
+    createLabel,
+    deleteLabel,
+    updateLabel,
+    getThread,
+    listThreads,
+    trashThread,
+    listDrafts,
+    createDraft,
+    sendDraft,
+    deleteDraft,
+    getProfile,
+    getAttachment,
+    batchModify,
+    triageInbox,
   ],
   displayName: 'Gmail',
   description: 'Email service by Google',

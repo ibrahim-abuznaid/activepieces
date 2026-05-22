@@ -20,6 +20,14 @@ export const createDocumentBasedOnTemplate = createAction({
   description:
     'Edit a template file and replace the values with the ones provided',
   displayName: 'Edit template file',
+  llmDescription:
+    'Mail-merge style replacement: given a template documentId and a key/value map, replace every placeholder (e.g. [[name]] or {{name}}) with the provided value via a single batchUpdate. Also supports replacing inline images by image objectId. Mutates the target document in place.',
+  audience: 'both',
+  idempotent: false,
+  sampleData: {
+    documentId: '1A2bC3dEfGhIjKlMnOpQrStUvWxYz0123456789ABCDEF',
+    replies: [{ replaceAllText: { occurrencesChanged: 3 } }],
+  },
   props: {
     template: Property.ShortText({
       displayName: 'Destination File',

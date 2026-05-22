@@ -15,6 +15,11 @@ export const filterClickupWorkspaceTasks = createAction({
   displayName: 'List Team Tasks',
   description:
     'Retrieves the tasks that meet specific criteria from a Workspace.',
+  llmDescription:
+    'GET /team/{workspace_id}/task with assignees, tags, statuses, date filters. Use for cross-list filtering. For simpler per-list listings use list_tasks_in_list. Read-only.',
+  audience: 'both',
+  idempotent: true,
+  sampleData: { tasks: [{ id: 'abc', name: 'A task', status: { status: 'open' } }] },
   props: {
     workspace_id: clickupCommon.workspace_id(true),
     space_id: clickupCommon.space_id(false, true),

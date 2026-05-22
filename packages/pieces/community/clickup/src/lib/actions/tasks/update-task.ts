@@ -9,6 +9,11 @@ export const updateClickupTask = createAction({
   name: 'update_task',
   description: 'Update task in a ClickUp workspace and list',
   displayName: 'Update Task',
+  llmDescription:
+    'PUT /task/{task_id} — update fields on a task. Pass only the fields to change; omitted fields are left intact. Prefer narrower agent helpers (set_task_status, set_task_priority, assign_task) when changing a single field.',
+  audience: 'both',
+  idempotent: true,
+  sampleData: { id: 'abc', name: 'Updated name' },
   props: {
     workspace_id: clickupCommon.workspace_id(),
     space_id: clickupCommon.space_id(),

@@ -32,6 +32,31 @@ import { renameWorksheetAction } from './lib/actions/rename-worksheet';
 import { deleteWorksheetAction } from './lib/actions/delete-worksheet';
 import { formatRowAction } from './lib/actions/format-spreadsheet-row';
 
+import { readRange } from './lib/actions/atomic/read-range';
+import { writeRange } from './lib/actions/atomic/write-range';
+import { clearRange } from './lib/actions/atomic/clear-range';
+import { appendValues } from './lib/actions/atomic/append-values';
+import { readCell } from './lib/actions/atomic/read-cell';
+import { writeCell } from './lib/actions/atomic/write-cell';
+import { readSheetAsJson } from './lib/actions/atomic/read-sheet-as-json';
+import { countRows } from './lib/actions/atomic/count-rows';
+import { getSpreadsheetMetadata } from './lib/actions/atomic/get-spreadsheet-metadata';
+import { sortRange } from './lib/actions/atomic/sort-range';
+import { duplicateSheet } from './lib/actions/atomic/duplicate-sheet';
+import { hideSheet } from './lib/actions/atomic/hide-sheet';
+import { addNamedRange } from './lib/actions/atomic/add-named-range';
+import { deleteNamedRange } from './lib/actions/atomic/delete-named-range';
+import { findRowByQuery } from './lib/actions/atomic/find-row-by-query';
+import { freezeRows } from './lib/actions/atomic/freeze-rows';
+import { autoResizeColumns } from './lib/actions/atomic/auto-resize-columns';
+import { listSheets } from './lib/actions/atomic/list-sheets';
+import { batchGetRanges } from './lib/actions/atomic/batch-get-ranges';
+import { batchUpdateValues } from './lib/actions/atomic/batch-update-values';
+import { insertEmptyRows } from './lib/actions/atomic/insert-empty-rows';
+import { deleteRows } from './lib/actions/atomic/delete-rows';
+import { protectRange } from './lib/actions/atomic/protect-range';
+import { buildReportSheet } from './lib/actions/composite/build-report-sheet';
+
 export const googleSheets = createPiece({
 	minimumSupportedRelease: '0.71.4',
 	logoUrl: 'https://cdn.activepieces.com/pieces/google-sheets.png',
@@ -80,6 +105,30 @@ export const googleSheets = createPiece({
 				};
 			},
 		}),
+		readRange,
+		writeRange,
+		clearRange,
+		appendValues,
+		readCell,
+		writeCell,
+		readSheetAsJson,
+		countRows,
+		getSpreadsheetMetadata,
+		sortRange,
+		duplicateSheet,
+		hideSheet,
+		addNamedRange,
+		deleteNamedRange,
+		findRowByQuery,
+		freezeRows,
+		autoResizeColumns,
+		listSheets,
+		batchGetRanges,
+		batchUpdateValues,
+		insertEmptyRows,
+		deleteRows,
+		protectRange,
+		buildReportSheet,
 	],
 	displayName: 'Google Sheets',
 	description: 'Create, edit, and collaborate on spreadsheets online',

@@ -46,6 +46,33 @@ import { listUsers } from './lib/actions/list-users';
 import { deleteMessageAction } from './lib/actions/delete-message';
 import { newModalInteractionTrigger } from './lib/triggers/new-modal-interaction';
 import { slackAuth } from './lib/auth';
+
+import { sendSimpleMessage } from './lib/actions/atomic/send-simple-message';
+import { updateMessageAgent } from './lib/actions/atomic/update-message-agent';
+import { deleteMessageAgent } from './lib/actions/atomic/delete-message-agent';
+import { listChannels } from './lib/actions/atomic/list-channels';
+import { getChannelInfo } from './lib/actions/atomic/get-channel-info';
+import { getChannelHistoryAgent } from './lib/actions/atomic/get-channel-history';
+import { getThreadReplies } from './lib/actions/atomic/get-thread-replies';
+import { joinChannel } from './lib/actions/atomic/join-channel';
+import { leaveChannel } from './lib/actions/atomic/leave-channel';
+import { archiveChannel } from './lib/actions/atomic/archive-channel';
+import { unarchiveChannel } from './lib/actions/atomic/unarchive-channel';
+import { renameChannel } from './lib/actions/atomic/rename-channel';
+import { setChannelPurpose } from './lib/actions/atomic/set-channel-purpose';
+import { kickUser } from './lib/actions/atomic/kick-user';
+import { getUserInfo } from './lib/actions/atomic/get-user-info';
+import { addReaction as addReactionAgent } from './lib/actions/atomic/add-reaction';
+import { removeReaction } from './lib/actions/atomic/remove-reaction';
+import { pinMessage } from './lib/actions/atomic/pin-message';
+import { unpinMessage } from './lib/actions/atomic/unpin-message';
+import { listPins } from './lib/actions/atomic/list-pins';
+import { addBookmark } from './lib/actions/atomic/add-bookmark';
+import { listBookmarks } from './lib/actions/atomic/list-bookmarks';
+import { getPermalink } from './lib/actions/atomic/get-permalink';
+import { scheduleMessage } from './lib/actions/atomic/schedule-message';
+import { lookupUserByEmail } from './lib/actions/atomic/lookup-user-by-email';
+import { announceAndPin } from './lib/actions/composite/announce-and-pin';
 import { getBotToken, getUserToken } from './lib/common/auth-helpers';
 import type { SlackAuthValue } from './lib/common/auth-helpers';
 import { updateGroupUsersAction } from './lib/actions/update-user-groups';
@@ -200,6 +227,32 @@ export const slack = createPiece({
         }),
       },
     }),
+    sendSimpleMessage,
+    updateMessageAgent,
+    deleteMessageAgent,
+    listChannels,
+    getChannelInfo,
+    getChannelHistoryAgent,
+    getThreadReplies,
+    joinChannel,
+    leaveChannel,
+    archiveChannel,
+    unarchiveChannel,
+    renameChannel,
+    setChannelPurpose,
+    kickUser,
+    getUserInfo,
+    addReactionAgent,
+    removeReaction,
+    pinMessage,
+    unpinMessage,
+    listPins,
+    addBookmark,
+    listBookmarks,
+    getPermalink,
+    scheduleMessage,
+    lookupUserByEmail,
+    announceAndPin,
   ],
   triggers: [
     newMessageTrigger,

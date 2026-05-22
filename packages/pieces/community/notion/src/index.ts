@@ -20,6 +20,31 @@ import { retrieveDatabase } from './lib/actions/retrieve-database';
 import { getPageComments } from './lib/actions/get-page-comments';
 import { findPage } from './lib/actions/find-page';
 
+import { searchNotion } from './lib/actions/atomic/search-notion';
+import { getPage } from './lib/actions/atomic/get-page';
+import { archivePage } from './lib/actions/atomic/archive-page';
+import { unarchivePage } from './lib/actions/atomic/unarchive-page';
+import { queryDatabase } from './lib/actions/atomic/query-database';
+import { listPageBlocks } from './lib/actions/atomic/list-page-blocks';
+import { getBlock } from './lib/actions/atomic/get-block';
+import { deleteBlock } from './lib/actions/atomic/delete-block';
+import { addParagraph } from './lib/actions/atomic/add-paragraph';
+import { addHeading } from './lib/actions/atomic/add-heading';
+import { addTodo } from './lib/actions/atomic/add-todo';
+import { addBulletedList } from './lib/actions/atomic/add-bulleted-list';
+import { addNumberedList } from './lib/actions/atomic/add-numbered-list';
+import { addCodeBlock } from './lib/actions/atomic/add-code-block';
+import { addCallout } from './lib/actions/atomic/add-callout';
+import { listUsers } from './lib/actions/atomic/list-users';
+import { getMe } from './lib/actions/atomic/get-me';
+import { getPageProperty } from './lib/actions/atomic/get-page-property';
+import { updatePageProperties } from './lib/actions/atomic/update-page-properties';
+import { createBlankPage } from './lib/actions/atomic/create-blank-page';
+import { retrieveDatabaseSchema } from './lib/actions/atomic/retrieve-database-schema';
+import { listComments as listCommentsAgent } from './lib/actions/atomic/list-database-comments';
+import { addCommentAgent } from './lib/actions/atomic/add-comment';
+import { createDailyStandup } from './lib/actions/composite/create-daily-standup';
+
 export const notion = createPiece({
   displayName: 'Notion',
   description: 'The all-in-one workspace',
@@ -57,6 +82,30 @@ export const notion = createPiece({
         Authorization: `Bearer ${getNotionToken(auth as NotionAuthValue)}`,
       }),
     }),
+    searchNotion,
+    getPage,
+    archivePage,
+    unarchivePage,
+    queryDatabase,
+    listPageBlocks,
+    getBlock,
+    deleteBlock,
+    addParagraph,
+    addHeading,
+    addTodo,
+    addBulletedList,
+    addNumberedList,
+    addCodeBlock,
+    addCallout,
+    listUsers,
+    getMe,
+    getPageProperty,
+    updatePageProperties,
+    createBlankPage,
+    retrieveDatabaseSchema,
+    listCommentsAgent,
+    addCommentAgent,
+    createDailyStandup,
   ],
   triggers: [newDatabaseItem, updatedDatabaseItem, newComment, updatedPage],
 });

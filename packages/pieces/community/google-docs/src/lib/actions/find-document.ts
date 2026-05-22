@@ -12,6 +12,19 @@ export const findDocumentAction = createAction({
 	name: 'google-docs-find-document',
 	displayName: 'Find Document',
 	description: 'Search for document by name.',
+	llmDescription:
+		'Find a Google Docs document by name (substring match) and optional parent folder. Returns the first match as `{ found: true, file }` or `{ found: false, file: {} }` when nothing matches. Set createIfNotFound=true to create one when missing. Read-only unless createIfNotFound triggers.',
+	audience: 'both',
+	idempotent: true,
+	sampleData: {
+		found: true,
+		file: {
+			id: '1A2bC3dEfGhIjKlMnOpQrStUvWxYz0123456789ABCDEF',
+			name: 'Project notes',
+			mimeType: 'application/vnd.google-apps.document',
+			webViewLink: 'https://docs.google.com/document/d/1A2bC3dEfGhIjKlMnOpQrStUvWxYz0123456789ABCDEF/edit',
+		},
+	},
 	props: {
 		name: Property.ShortText({
 			displayName: 'Document Name',

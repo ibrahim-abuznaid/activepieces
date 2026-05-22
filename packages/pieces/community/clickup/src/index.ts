@@ -38,6 +38,34 @@ import { deleteClickupMessageReaction } from './lib/actions/chat/delete-message-
 import { getClickupTaskByName } from './lib/actions/tasks/get-task-by-name';
 import { clickupAuth } from './lib/auth';
 
+import { listWorkspaces } from './lib/actions/atomic/list-workspaces';
+import { listSpaces } from './lib/actions/atomic/list-spaces';
+import { listFolders } from './lib/actions/atomic/list-folders';
+import { listLists } from './lib/actions/atomic/list-lists';
+import { listTasksInList } from './lib/actions/atomic/list-tasks-in-list';
+import { getWorkspaceMembers } from './lib/actions/atomic/get-workspace-members';
+import { getUserMe } from './lib/actions/atomic/get-user-me';
+import { setTaskStatus } from './lib/actions/atomic/set-task-status';
+import { setTaskPriority } from './lib/actions/atomic/set-task-priority';
+import { setTaskDueDate } from './lib/actions/atomic/set-task-due-date';
+import { assignTask } from './lib/actions/atomic/assign-task';
+import { unassignTask } from './lib/actions/atomic/unassign-task';
+import { addTaskTag } from './lib/actions/atomic/add-task-tag';
+import { removeTaskTag } from './lib/actions/atomic/remove-task-tag';
+import { addTaskLink } from './lib/actions/atomic/add-task-link';
+import { addTaskDependency } from './lib/actions/atomic/add-task-dependency';
+import { createChecklist } from './lib/actions/atomic/create-checklist';
+import { addChecklistItem } from './lib/actions/atomic/add-checklist-item';
+import { resolveChecklistItem } from './lib/actions/atomic/resolve-checklist-item';
+import { getTaskSubtasks } from './lib/actions/atomic/get-task-subtasks';
+import { listMyTasks } from './lib/actions/atomic/list-my-tasks';
+import { moveTask } from './lib/actions/atomic/move-task';
+import { duplicateTask } from './lib/actions/atomic/duplicate-task';
+import { startTimeTracking } from './lib/actions/atomic/start-time-tracking';
+import { stopTimeTracking } from './lib/actions/atomic/stop-time-tracking';
+import { searchTasks } from './lib/actions/atomic/search-tasks';
+import { triageNewTask } from './lib/actions/composite/triage-new-task';
+
 export const clickup = createPiece({
   displayName: 'ClickUp',
   description: 'All-in-one productivity platform',
@@ -87,6 +115,33 @@ export const clickup = createPiece({
         };
       },
     }),
+    listWorkspaces,
+    listSpaces,
+    listFolders,
+    listLists,
+    listTasksInList,
+    getWorkspaceMembers,
+    getUserMe,
+    setTaskStatus,
+    setTaskPriority,
+    setTaskDueDate,
+    assignTask,
+    unassignTask,
+    addTaskTag,
+    removeTaskTag,
+    addTaskLink,
+    addTaskDependency,
+    createChecklist,
+    addChecklistItem,
+    resolveChecklistItem,
+    getTaskSubtasks,
+    listMyTasks,
+    moveTask,
+    duplicateTask,
+    startTimeTracking,
+    stopTimeTracking,
+    searchTasks,
+    triageNewTask,
   ],
   authors: ["kanarelo","kishanprmr","MoShizzle","khaledmashaly","abuaboud","AbdulTheActivePiecer"],
   triggers,
