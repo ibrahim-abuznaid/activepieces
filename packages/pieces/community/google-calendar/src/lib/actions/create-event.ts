@@ -9,6 +9,11 @@ export const createEvent = createAction({
   name: 'create_google_calendar_event',
   description: 'Add Event',
   displayName: 'Create Event',
+  llmDescription:
+    "events.insert — create a calendar event with title, start, end, attendees, location, description, etc. Pass ISO datetimes and an IANA timeZone. Use the simpler quick_add_event agent helper when you only have a natural-language string like 'Lunch with Bob tomorrow noon'.",
+  audience: 'both',
+  idempotent: false,
+  sampleData: { id: 'ev-1', summary: 'New event', start: { dateTime: '2026-05-22T15:00:00Z' }, end: { dateTime: '2026-05-22T16:00:00Z' } },
   props: {
     calendar_id: googleCalendarCommon.calendarDropdown('writer'),
     title: Property.ShortText({

@@ -1,4 +1,4 @@
-import { AppConnectionValueForAuthProperty, createTrigger, PiecePropValueSchema, Property } from '@activepieces/pieces-framework';
+import { AppConnectionValueForAuthProperty, createTrigger, Property } from '@activepieces/pieces-framework';
 import { TriggerStrategy } from '@activepieces/pieces-framework';
 import { googleCalendarCommon } from '../common';
 import { getEvents } from '../common/helper';

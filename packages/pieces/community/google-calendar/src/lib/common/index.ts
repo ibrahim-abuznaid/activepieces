@@ -1,6 +1,6 @@
 import { Property } from '@activepieces/pieces-framework';
 import { getCalendars, getColors, getEventsForDropdown } from './helper';
-import { googleCalendarAuth, GoogleCalendarAuthValue, getAccessToken } from '../auth';
+import { googleCalendarAuth, GoogleCalendarAuthValue } from '../auth';
 
 export { googleCalendarAuth, GoogleCalendarAuthValue, getAccessToken, createGoogleClient, googleCalendarScopes } from '../auth';
 

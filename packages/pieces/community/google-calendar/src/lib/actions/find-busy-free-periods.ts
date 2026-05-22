@@ -28,6 +28,11 @@ export const findFreeBusy = createAction({
   name: 'google_calendar_find_busy_free_periods',
   displayName: 'Find Busy/Free Periods in Calendar',
   description: 'Finds free/busy calendar details from Google Calendar.',
+  llmDescription:
+    'freebusy.query — return busy intervals for selected calendars between timeMin/timeMax. For agent use prefer find_free_slots (same call, more compact inputs). Read-only.',
+  audience: 'both',
+  idempotent: true,
+  sampleData: { calendars: { primary: { busy: [] } } },
   props: {
     calendar_ids: Property.MultiSelectDropdown({
       auth: googleCalendarAuth,

@@ -13,6 +13,11 @@ export const getEvents = createAction({
   name: 'google_calendar_get_events',
   description: 'Get Events',
   displayName: 'Get all Events',
+  llmDescription:
+    "events.list (HTTP) — list events with rich filters (event_types, time window). For agent use prefer list_events (simpler signature). Read-only.",
+  audience: 'both',
+  idempotent: true,
+  sampleData: { items: [{ id: 'ev-1', summary: 'Sync' }] },
   props: {
     calendar_id: googleCalendarCommon.calendarDropdown('writer'),
     event_types: Property.StaticMultiSelectDropdown({

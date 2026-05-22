@@ -1,6 +1,6 @@
 import { createAction, Property } from '@activepieces/pieces-framework';
 import { google } from 'googleapis';
-import { googleCalendarCommon, googleCalendarAuth, createGoogleClient } from '../common';
+import { googleCalendarAuth, createGoogleClient } from '../common';
 
 export const addCalendarToCalendarlist = createAction({
   auth: googleCalendarAuth,
