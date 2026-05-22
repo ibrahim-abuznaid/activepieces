@@ -1,7 +1,6 @@
 import {
 	AppConnectionValueForAuthProperty,
 	createAction,
-	PiecePropValueSchema,
 	Property,
 } from '@activepieces/pieces-framework';
 import {

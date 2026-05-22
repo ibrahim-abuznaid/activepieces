@@ -1,6 +1,6 @@
 import { isNil } from '@activepieces/shared';
 import { googleSheetsAuth } from '../common/common';
-import { areSheetIdsValid, columnToLabel, GoogleSheetsAuthValue, labelToColumn } from '../common/common';
+import { areSheetIdsValid, columnToLabel, labelToColumn } from '../common/common';
 import {
 	createFileNotification,
 	deleteFileNotification,

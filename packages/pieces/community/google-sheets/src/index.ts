@@ -32,6 +32,30 @@ import { renameWorksheetAction } from './lib/actions/rename-worksheet';
 import { deleteWorksheetAction } from './lib/actions/delete-worksheet';
 import { formatRowAction } from './lib/actions/format-spreadsheet-row';
 
+import { readRange } from './lib/actions/agent/read-range';
+import { writeRange } from './lib/actions/agent/write-range';
+import { clearRange } from './lib/actions/agent/clear-range';
+import { appendValues } from './lib/actions/agent/append-values';
+import { readCell } from './lib/actions/agent/read-cell';
+import { writeCell } from './lib/actions/agent/write-cell';
+import { readSheetAsJson } from './lib/actions/agent/read-sheet-as-json';
+import { countRows } from './lib/actions/agent/count-rows';
+import { getSpreadsheetMetadata } from './lib/actions/agent/get-spreadsheet-metadata';
+import { sortRange } from './lib/actions/agent/sort-range';
+import { duplicateSheet } from './lib/actions/agent/duplicate-sheet';
+import { hideSheet } from './lib/actions/agent/hide-sheet';
+import { addNamedRange } from './lib/actions/agent/add-named-range';
+import { deleteNamedRange } from './lib/actions/agent/delete-named-range';
+import { findRowByQuery } from './lib/actions/agent/find-row-by-query';
+import { freezeRows } from './lib/actions/agent/freeze-rows';
+import { autoResizeColumns } from './lib/actions/agent/auto-resize-columns';
+import { listSheets } from './lib/actions/agent/list-sheets';
+import { batchGetRanges } from './lib/actions/agent/batch-get-ranges';
+import { batchUpdateValues } from './lib/actions/agent/batch-update-values';
+import { insertEmptyRows } from './lib/actions/agent/insert-empty-rows';
+import { deleteRows } from './lib/actions/agent/delete-rows';
+import { protectRange } from './lib/actions/agent/protect-range';
+
 export const googleSheets = createPiece({
 	minimumSupportedRelease: '0.71.4',
 	logoUrl: 'https://cdn.activepieces.com/pieces/google-sheets.png',
@@ -80,6 +104,29 @@ export const googleSheets = createPiece({
 				};
 			},
 		}),
+		readRange,
+		writeRange,
+		clearRange,
+		appendValues,
+		readCell,
+		writeCell,
+		readSheetAsJson,
+		countRows,
+		getSpreadsheetMetadata,
+		sortRange,
+		duplicateSheet,
+		hideSheet,
+		addNamedRange,
+		deleteNamedRange,
+		findRowByQuery,
+		freezeRows,
+		autoResizeColumns,
+		listSheets,
+		batchGetRanges,
+		batchUpdateValues,
+		insertEmptyRows,
+		deleteRows,
+		protectRange,
 	],
 	displayName: 'Google Sheets',
 	description: 'Create, edit, and collaborate on spreadsheets online',

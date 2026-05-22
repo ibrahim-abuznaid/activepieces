@@ -3,7 +3,6 @@ import {
 	createAction,
 	DropdownOption,
 	DynamicPropsValue,
-	OAuth2PropertyValue,
 	Property,
 } from '@activepieces/pieces-framework';
 import {
