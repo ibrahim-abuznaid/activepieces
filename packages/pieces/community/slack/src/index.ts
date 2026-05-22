@@ -46,6 +46,32 @@ import { listUsers } from './lib/actions/list-users';
 import { deleteMessageAction } from './lib/actions/delete-message';
 import { newModalInteractionTrigger } from './lib/triggers/new-modal-interaction';
 import { slackAuth } from './lib/auth';
+
+import { sendSimpleMessage } from './lib/actions/agent/send-simple-message';
+import { updateMessageAgent } from './lib/actions/agent/update-message-agent';
+import { deleteMessageAgent } from './lib/actions/agent/delete-message-agent';
+import { listChannels } from './lib/actions/agent/list-channels';
+import { getChannelInfo } from './lib/actions/agent/get-channel-info';
+import { getChannelHistoryAgent } from './lib/actions/agent/get-channel-history';
+import { getThreadReplies } from './lib/actions/agent/get-thread-replies';
+import { joinChannel } from './lib/actions/agent/join-channel';
+import { leaveChannel } from './lib/actions/agent/leave-channel';
+import { archiveChannel } from './lib/actions/agent/archive-channel';
+import { unarchiveChannel } from './lib/actions/agent/unarchive-channel';
+import { renameChannel } from './lib/actions/agent/rename-channel';
+import { setChannelPurpose } from './lib/actions/agent/set-channel-purpose';
+import { kickUser } from './lib/actions/agent/kick-user';
+import { getUserInfo } from './lib/actions/agent/get-user-info';
+import { addReaction as addReactionAgent } from './lib/actions/agent/add-reaction';
+import { removeReaction } from './lib/actions/agent/remove-reaction';
+import { pinMessage } from './lib/actions/agent/pin-message';
+import { unpinMessage } from './lib/actions/agent/unpin-message';
+import { listPins } from './lib/actions/agent/list-pins';
+import { addBookmark } from './lib/actions/agent/add-bookmark';
+import { listBookmarks } from './lib/actions/agent/list-bookmarks';
+import { getPermalink } from './lib/actions/agent/get-permalink';
+import { scheduleMessage } from './lib/actions/agent/schedule-message';
+import { lookupUserByEmail } from './lib/actions/agent/lookup-user-by-email';
 import { getBotToken, getUserToken } from './lib/common/auth-helpers';
 import type { SlackAuthValue } from './lib/common/auth-helpers';
 import { updateGroupUsersAction } from './lib/actions/update-user-groups';
@@ -200,6 +226,31 @@ export const slack = createPiece({
         }),
       },
     }),
+    sendSimpleMessage,
+    updateMessageAgent,
+    deleteMessageAgent,
+    listChannels,
+    getChannelInfo,
+    getChannelHistoryAgent,
+    getThreadReplies,
+    joinChannel,
+    leaveChannel,
+    archiveChannel,
+    unarchiveChannel,
+    renameChannel,
+    setChannelPurpose,
+    kickUser,
+    getUserInfo,
+    addReactionAgent,
+    removeReaction,
+    pinMessage,
+    unpinMessage,
+    listPins,
+    addBookmark,
+    listBookmarks,
+    getPermalink,
+    scheduleMessage,
+    lookupUserByEmail,
   ],
   triggers: [
     newMessageTrigger,

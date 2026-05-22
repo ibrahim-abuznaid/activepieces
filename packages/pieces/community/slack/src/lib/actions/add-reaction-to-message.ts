@@ -6,7 +6,6 @@ import { WebClient } from '@slack/web-api';
 import { processMessageTimestamp } from '../common/utils';
 import {
   getBotToken,
-  getUserToken,
   requireUserToken,
   SlackAuthValue,
 } from '../common/auth-helpers';
