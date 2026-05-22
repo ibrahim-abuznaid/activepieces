@@ -19,7 +19,10 @@ export const triageInbox = createAction({
       required: false,
       defaultValue: 'is:unread',
     }),
-    labelId: Property.ShortText({ displayName: 'Label ID to Add', required: false }),
+    labelId: Property.ShortText({
+      displayName: 'Label ID to Add',
+      required: false,
+    }),
     markRead: Property.Checkbox({
       displayName: 'Mark as Read',
       required: false,
@@ -30,7 +33,11 @@ export const triageInbox = createAction({
       required: false,
       defaultValue: false,
     }),
-    limit: Property.Number({ displayName: 'Max Messages', required: false, defaultValue: 25 }),
+    limit: Property.Number({
+      displayName: 'Max Messages',
+      required: false,
+      defaultValue: 25,
+    }),
   },
   async run({ auth, propsValue }) {
     const gmail = await gmailAgentCommon.gmailClient(auth);
@@ -39,7 +46,9 @@ export const triageInbox = createAction({
       q: propsValue.q ?? 'is:unread',
       maxResults: propsValue.limit ?? 25,
     });
-    const ids = (list.data.messages ?? []).map((m) => m.id).filter((v): v is string => !!v);
+    const ids = (list.data.messages ?? [])
+      .map((m) => m.id)
+      .filter((v): v is string => !!v);
     if (ids.length === 0) return { matched: 0, modified: 0 };
 
     const addLabelIds = propsValue.labelId ? [propsValue.labelId] : [];
