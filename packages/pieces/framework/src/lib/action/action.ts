@@ -19,6 +19,9 @@ export const ErrorHandlingOptionsParam = z.object({
 })
 export type ErrorHandlingOptionsParam = z.infer<typeof ErrorHandlingOptionsParam>
 
+export const ActionAudience = z.enum(['agent', 'canvas', 'both'])
+export type ActionAudience = z.infer<typeof ActionAudience>
+
 type CreateActionParams<PieceAuth extends PieceAuthProperty | PieceAuthProperty[] | undefined, ActionProps extends InputPropertyMap> = {
   /**
    * A dummy parameter used to infer {@code PieceAuth} type
@@ -37,6 +40,23 @@ type CreateActionParams<PieceAuth extends PieceAuthProperty | PieceAuthProperty[
    * Falls back to {@code description} when omitted.
    */
   llmDescription?: string
+  /**
+   * Who this action is intended for. `agent` = only exposed as an MCP/LLM
+   * tool. `canvas` = only shown in the visual flow builder. `both` (default
+   * when omitted) = exposed in both surfaces.
+   */
+  audience?: ActionAudience
+  /**
+   * Whether re-running this action with the same inputs has the same effect.
+   * Used by retry policies, agent planners, and the canvas to surface a "safe
+   * to retry" hint. Read-only / GET-style actions should set `true`.
+   */
+  idempotent?: boolean
+  /**
+   * Representative successful response shape, used by the agent surface and
+   * the canvas test/sample-output pane when no live test data is available.
+   */
+  sampleData?: unknown
   props: ActionProps
   run: ActionRunner<ExtractPieceAuthPropertyTypeForMethods<PieceAuth>, ActionProps>
   test?: ActionRunner<ExtractPieceAuthPropertyTypeForMethods<PieceAuth>, ActionProps>
@@ -56,6 +76,9 @@ export class IAction<PieceAuth extends PieceAuthProperty | PieceAuthProperty[] |
     public readonly requireAuth: boolean,
     public readonly errorHandlingOptions: ErrorHandlingOptionsParam,
     public readonly llmDescription?: string,
+    public readonly audience?: ActionAudience,
+    public readonly idempotent?: boolean,
+    public readonly sampleData?: unknown,
   ) { }
 }
 
@@ -89,5 +112,8 @@ export const createAction = <
       }
     },
     params.llmDescription,
+    params.audience,
+    params.idempotent,
+    params.sampleData,
   )
 }

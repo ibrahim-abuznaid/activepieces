@@ -1,6 +1,6 @@
 import { PiecePropertyMap } from "./property";
 import { WebhookRenewConfiguration } from "./trigger/trigger";
-import { ErrorHandlingOptionsParam } from "./action/action";
+import { ActionAudience, ErrorHandlingOptionsParam } from "./action/action";
 import { PieceAuthProperty } from "./property/authentication";
 import { z } from "zod";
 import { LocalesEnum, PackageType, PieceCategory, PieceType, TriggerStrategy, TriggerTestStrategy, WebhookHandshakeConfiguration } from "@activepieces/shared";
@@ -50,6 +50,9 @@ export const ActionBase = z.object({
   displayName: z.string(),
   description: z.string(),
   llmDescription: z.string().optional(),
+  audience: ActionAudience.optional(),
+  idempotent: z.boolean().optional(),
+  sampleData: z.unknown().optional(),
   props: PiecePropertyMap,
   requireAuth: z.boolean(),
   errorHandlingOptions: ErrorHandlingOptionsParam.optional(),
@@ -60,6 +63,9 @@ export type ActionBase = {
   displayName: string,
   description: string,
   llmDescription?: string,
+  audience?: ActionAudience,
+  idempotent?: boolean,
+  sampleData?: unknown,
   props: PiecePropertyMap,
   requireAuth: boolean;
   errorHandlingOptions?: ErrorHandlingOptionsParam;
@@ -70,6 +76,8 @@ export const TriggerBase = z.object({
   displayName: z.string(),
   description: z.string(),
   llmDescription: z.string().optional(),
+  audience: ActionAudience.optional(),
+  idempotent: z.boolean().optional(),
   props: PiecePropertyMap,
   errorHandlingOptions: ErrorHandlingOptionsParam.optional(),
   type: z.nativeEnum(TriggerStrategy),

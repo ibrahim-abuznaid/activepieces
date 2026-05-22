@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { OnStartContext, TestOrRunHookContext, TriggerHookContext } from '../context';
+import { ActionAudience } from '../action/action';
 import { TriggerBase } from '../piece-metadata';
 import { InputPropertyMap } from '../property';
 import { ExtractPieceAuthPropertyTypeForMethods, PieceAuthProperty } from '../property/authentication';
@@ -51,6 +52,17 @@ type BaseTriggerParams<
    * Falls back to {@code description} when omitted.
    */
   llmDescription?: string
+  /**
+   * Who this trigger is intended for. `agent` = only exposed as an MCP/LLM
+   * tool. `canvas` = only shown in the visual flow builder. `both` (default
+   * when omitted) = exposed in both surfaces.
+   */
+  audience?: ActionAudience
+  /**
+   * Whether the same event firing twice yields the same downstream effect.
+   * Used by deduplication hints and agent planners.
+   */
+  idempotent?: boolean
   requireAuth?: boolean
   auth?: PieceAuth
   props: TriggerProps
@@ -106,6 +118,8 @@ export class ITrigger<
     public readonly sampleData: unknown,
     public readonly testStrategy: TriggerTestStrategy,
     public readonly llmDescription?: string,
+    public readonly audience?: ActionAudience,
+    public readonly idempotent?: boolean,
   ) { }
 }
 
@@ -143,6 +157,8 @@ export const createTrigger = <
         params.sampleData,
         params.test ? TriggerTestStrategy.TEST_FUNCTION : TriggerTestStrategy.SIMULATION,
         params.llmDescription,
+        params.audience,
+        params.idempotent,
       )
     case TriggerStrategy.POLLING:
       return new ITrigger(
@@ -164,6 +180,8 @@ export const createTrigger = <
         params.sampleData,
         TriggerTestStrategy.TEST_FUNCTION,
         params.llmDescription,
+        params.audience,
+        params.idempotent,
       )
     case TriggerStrategy.MANUAL:
       return new ITrigger(
@@ -185,6 +203,8 @@ export const createTrigger = <
         params.sampleData,
         TriggerTestStrategy.TEST_FUNCTION,
         params.llmDescription,
+        params.audience,
+        params.idempotent,
       )
     case TriggerStrategy.APP_WEBHOOK:
       return new ITrigger(
@@ -206,6 +226,8 @@ export const createTrigger = <
         params.sampleData,
         (isNil(params.sampleData) && isNil(params.test)) ? TriggerTestStrategy.SIMULATION : TriggerTestStrategy.TEST_FUNCTION,
         params.llmDescription,
+        params.audience,
+        params.idempotent,
       )
   }
 }
