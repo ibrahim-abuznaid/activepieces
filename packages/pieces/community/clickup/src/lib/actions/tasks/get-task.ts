@@ -8,6 +8,11 @@ export const getClickupTask = createAction({
   name: 'get_list_task',
   description: 'Gets a task in a ClickUp list',
   displayName: 'Get Task',
+  llmDescription:
+    'GET /task/{task_id} — fetch a single ClickUp task by id. Returns name, status, priority, assignees, due_date, custom_fields, etc. Read-only.',
+  audience: 'both',
+  idempotent: true,
+  sampleData: { id: 'abc', name: 'A task', status: { status: 'open' }, assignees: [], priority: null },
   props: {
     task_id: Property.ShortText({
       description: 'The ID of the task to get',

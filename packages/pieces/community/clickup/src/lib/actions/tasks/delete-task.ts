@@ -9,6 +9,11 @@ export const deleteClickupTask = createAction({
   name: 'delete_task',
   description: 'Delete a task in a workspace and list',
   displayName: 'Delete Task',
+  llmDescription:
+    'DELETE /task/{task_id} — permanently delete a ClickUp task. Destructive; confirm with the user before calling.',
+  audience: 'both',
+  idempotent: true,
+  sampleData: { ok: true },
   props: {
     workspace_id: clickupCommon.workspace_id(),
     space_id: clickupCommon.space_id(),

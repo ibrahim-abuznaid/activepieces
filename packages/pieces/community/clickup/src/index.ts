@@ -38,6 +38,33 @@ import { deleteClickupMessageReaction } from './lib/actions/chat/delete-message-
 import { getClickupTaskByName } from './lib/actions/tasks/get-task-by-name';
 import { clickupAuth } from './lib/auth';
 
+import { listWorkspaces } from './lib/actions/agent/list-workspaces';
+import { listSpaces } from './lib/actions/agent/list-spaces';
+import { listFolders } from './lib/actions/agent/list-folders';
+import { listLists } from './lib/actions/agent/list-lists';
+import { listTasksInList } from './lib/actions/agent/list-tasks-in-list';
+import { getWorkspaceMembers } from './lib/actions/agent/get-workspace-members';
+import { getUserMe } from './lib/actions/agent/get-user-me';
+import { setTaskStatus } from './lib/actions/agent/set-task-status';
+import { setTaskPriority } from './lib/actions/agent/set-task-priority';
+import { setTaskDueDate } from './lib/actions/agent/set-task-due-date';
+import { assignTask } from './lib/actions/agent/assign-task';
+import { unassignTask } from './lib/actions/agent/unassign-task';
+import { addTaskTag } from './lib/actions/agent/add-task-tag';
+import { removeTaskTag } from './lib/actions/agent/remove-task-tag';
+import { addTaskLink } from './lib/actions/agent/add-task-link';
+import { addTaskDependency } from './lib/actions/agent/add-task-dependency';
+import { createChecklist } from './lib/actions/agent/create-checklist';
+import { addChecklistItem } from './lib/actions/agent/add-checklist-item';
+import { resolveChecklistItem } from './lib/actions/agent/resolve-checklist-item';
+import { getTaskSubtasks } from './lib/actions/agent/get-task-subtasks';
+import { listMyTasks } from './lib/actions/agent/list-my-tasks';
+import { moveTask } from './lib/actions/agent/move-task';
+import { duplicateTask } from './lib/actions/agent/duplicate-task';
+import { startTimeTracking } from './lib/actions/agent/start-time-tracking';
+import { stopTimeTracking } from './lib/actions/agent/stop-time-tracking';
+import { searchTasks } from './lib/actions/agent/search-tasks';
+
 export const clickup = createPiece({
   displayName: 'ClickUp',
   description: 'All-in-one productivity platform',
@@ -87,6 +114,32 @@ export const clickup = createPiece({
         };
       },
     }),
+    listWorkspaces,
+    listSpaces,
+    listFolders,
+    listLists,
+    listTasksInList,
+    getWorkspaceMembers,
+    getUserMe,
+    setTaskStatus,
+    setTaskPriority,
+    setTaskDueDate,
+    assignTask,
+    unassignTask,
+    addTaskTag,
+    removeTaskTag,
+    addTaskLink,
+    addTaskDependency,
+    createChecklist,
+    addChecklistItem,
+    resolveChecklistItem,
+    getTaskSubtasks,
+    listMyTasks,
+    moveTask,
+    duplicateTask,
+    startTimeTracking,
+    stopTimeTracking,
+    searchTasks,
   ],
   authors: ["kanarelo","kishanprmr","MoShizzle","khaledmashaly","abuaboud","AbdulTheActivePiecer"],
   triggers,

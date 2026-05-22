@@ -18,6 +18,11 @@ export const createClickupTask = createAction({
   name: 'create_task',
   description: 'Create a new task in a ClickUp workspace and list',
   displayName: 'Create Task',
+  llmDescription:
+    'POST /list/{list_id}/task — create a task in the given ClickUp list. At minimum needs name. Optional: description (or markdown_content if is_markdown), status, priority (1=Urgent..4=Low), assignees, due_date (epoch ms), tags, custom_fields. For LLM agents, prefer this rich create when you have all the fields; otherwise call narrower agent helpers (set_task_status, assign_task, ...) after creation.',
+  audience: 'both',
+  idempotent: false,
+  sampleData: { id: 'abc', name: 'New task', status: { status: 'open' }, list: { id: 'list-1' } },
   props: {
     workspace_id: clickupCommon.workspace_id(),
     space_id: clickupCommon.space_id(),
