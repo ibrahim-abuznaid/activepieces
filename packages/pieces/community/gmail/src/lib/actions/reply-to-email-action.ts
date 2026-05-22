@@ -11,6 +11,11 @@ export const gmailReplyToEmailAction = createAction({
   name: 'reply_to_email',
   displayName: 'Reply to Email',
   description: 'Reply to an existing email.',
+  llmDescription:
+    "Reply to a specific message by id. Composes an RFC 2822 reply (sets In-Reply-To, References, Subject 'Re:') and sends via users.messages.send. Body is sent inside the original thread.",
+  audience: 'both',
+  idempotent: false,
+  sampleData: { id: '18f...', labelIds: ['SENT'], threadId: '18f...' },
   props: {
     message_id: GmailProps.message,
     reply_type: Property.StaticDropdown({

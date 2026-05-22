@@ -13,6 +13,31 @@ import { gmailSearchMailAction } from './lib/actions/search-email-action';
 import { gmailGetEmailAction } from './lib/actions/get-mail-action';
 import { gmailAuth, getAccessToken, GmailAuthValue } from './lib/auth';
 
+import { listMessages } from './lib/actions/agent/list-messages';
+import { getMessage } from './lib/actions/agent/get-message';
+import { trashMessage } from './lib/actions/agent/trash-message';
+import { untrashMessage } from './lib/actions/agent/untrash-message';
+import { deleteMessage } from './lib/actions/agent/delete-message';
+import { archiveMessage } from './lib/actions/agent/archive-message';
+import { markAsRead } from './lib/actions/agent/mark-as-read';
+import { markAsUnread } from './lib/actions/agent/mark-as-unread';
+import { addLabel } from './lib/actions/agent/add-label';
+import { removeLabel } from './lib/actions/agent/remove-label';
+import { listLabels } from './lib/actions/agent/list-labels';
+import { createLabel } from './lib/actions/agent/create-label';
+import { deleteLabel } from './lib/actions/agent/delete-label';
+import { updateLabel } from './lib/actions/agent/update-label';
+import { getThread } from './lib/actions/agent/get-thread';
+import { listThreads } from './lib/actions/agent/list-threads';
+import { trashThread } from './lib/actions/agent/trash-thread';
+import { listDrafts } from './lib/actions/agent/list-drafts';
+import { createDraft } from './lib/actions/agent/create-draft';
+import { sendDraft } from './lib/actions/agent/send-draft';
+import { deleteDraft } from './lib/actions/agent/delete-draft';
+import { getProfile } from './lib/actions/agent/get-profile';
+import { getAttachment } from './lib/actions/agent/get-attachment';
+import { batchModify } from './lib/actions/agent/batch-modify';
+
 export {
   gmailAuth,
   getAccessToken,
@@ -41,6 +66,30 @@ export const gmail = createPiece({
         Authorization: `Bearer ${await getAccessToken(auth as GmailAuthValue)}`,
       }),
     }),
+    listMessages,
+    getMessage,
+    trashMessage,
+    untrashMessage,
+    deleteMessage,
+    archiveMessage,
+    markAsRead,
+    markAsUnread,
+    addLabel,
+    removeLabel,
+    listLabels,
+    createLabel,
+    deleteLabel,
+    updateLabel,
+    getThread,
+    listThreads,
+    trashThread,
+    listDrafts,
+    createDraft,
+    sendDraft,
+    deleteDraft,
+    getProfile,
+    getAttachment,
+    batchModify,
   ],
   displayName: 'Gmail',
   description: 'Email service by Google',

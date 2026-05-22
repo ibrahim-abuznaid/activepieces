@@ -10,6 +10,11 @@ export const gmailSendEmailAction = createAction({
   name: 'send_email',
   description: 'Send an email through a Gmail account',
   displayName: 'Send Email',
+  llmDescription:
+    'users.messages.send — compose and send an email via Gmail. Supports rich props (cc/bcc, attachments, reply-to). For lightweight agent use, prefer the more granular helpers (create_draft + send_draft) when you need to inspect before send.',
+  audience: 'both',
+  idempotent: false,
+  sampleData: { id: '18f...', labelIds: ['SENT'], threadId: '18f...' },
   props: {
     receiver: Property.Array({
       displayName: 'Receiver Email (To)',

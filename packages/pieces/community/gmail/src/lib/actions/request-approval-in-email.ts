@@ -16,6 +16,11 @@ export const requestApprovalInEmail = createAction({
   displayName: 'Request Approval in Email',
   description:
     'Send approval request email and then wait until the email is approved or disapproved',
+  llmDescription:
+    'Send an email with Approve / Disapprove buttons and PAUSE the flow until one is clicked. Resume URL embeds approver decision. NOT suitable for fast agent loops — this is a human-in-the-loop step (canvas-first audience). Use sparingly via the agent surface.',
+  audience: 'canvas',
+  idempotent: false,
+  sampleData: { approved: true },
   props: {
     receiver: Property.ShortText({
       displayName: 'Receiver Email (To)',

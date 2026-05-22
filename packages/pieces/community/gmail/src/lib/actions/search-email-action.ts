@@ -11,6 +11,13 @@ export const gmailSearchMailAction = createAction({
   displayName: 'Find Email',
   description:
     'Find emails using advanced search criteria. If no filters are provided, the latest emails are returned.',
+  llmDescription:
+    "Search Gmail with friendly fielded inputs (from, to, subject, content, label). Translates to users.messages.list with a Gmail-style query. Returns parsed messages (not just ids). For raw API access prefer the agent's list_messages.",
+  audience: 'both',
+  idempotent: true,
+  sampleData: {
+    messages: [{ id: '18f...', from: 'a@example.com', subject: 'Hi' }],
+  },
   props: {
     from: GmailProps.from,
     to: GmailProps.to,

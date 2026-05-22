@@ -8,6 +8,16 @@ export const gmailGetEmailAction = createAction({
   name: 'gmail_get_mail',
   description: 'Get an email via Id.',
   displayName: 'Get Email',
+  llmDescription:
+    "Fetches a single email by id with parsed body + attachments. For raw API response, prefer the agent's get_message action.",
+  audience: 'both',
+  idempotent: true,
+  sampleData: {
+    id: '18f...',
+    from: 'a@example.com',
+    subject: 'Hi',
+    body: 'Hello',
+  },
   props: {
     message_id: Property.ShortText({
       displayName: 'Message ID',

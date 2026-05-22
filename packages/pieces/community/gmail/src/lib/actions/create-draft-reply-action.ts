@@ -11,6 +11,11 @@ export const gmailCreateDraftReplyAction = createAction({
   name: 'create_draft_reply',
   description: 'Creates a draft reply to an existing email.',
   displayName: 'Create Draft Reply',
+  llmDescription:
+    'Create a draft reply to a message by id (no send). Useful when an agent wants to compose a reply and have a human review before send.',
+  audience: 'both',
+  idempotent: false,
+  sampleData: { id: 'r-1', message: { id: '18f...', labelIds: ['DRAFT'] } },
   props: {
     message_id: GmailProps.message,
     reply_type: Property.StaticDropdown({
