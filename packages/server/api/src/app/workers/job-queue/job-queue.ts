@@ -1,5 +1,6 @@
+import { ApId, isNil } from '@activepieces/core-utils'
 import { apDayjsDuration, memoryLock } from '@activepieces/server-utils'
-import { ApId, EventDestinationJobData, ExecuteChatAgentJobData, ExecuteFlowJobData, getDefaultJobPriority, isNil, JOB_PRIORITY, JobData, PollingJobData, RenewWebhookJobData, ScheduleOptions, UserInteractionJobData, WebhookJobData, WorkerJobType } from '@activepieces/shared'
+import { EventDestinationJobData, ExecuteChatAgentJobData, ExecuteFlowJobData, getDefaultJobPriority, JOB_PRIORITY, JobData, PollingJobData, RenewWebhookJobData, ScheduleOptions, UserInteractionJobData, WebhookJobData, WorkerJobType } from '@activepieces/shared'
 import { Job, Queue } from 'bullmq'
 import { FastifyBaseLogger } from 'fastify'
 import { redisConnections } from '../../database/redis-connections'
@@ -46,6 +47,7 @@ export const jobQueue = (log: FastifyBaseLogger) => ({
                     delay: params.delay,
                     jobId: params.id,
                     ...(data.jobType === WorkerJobType.EVENT_DESTINATION ? { removeOnFail: true } : {}),
+                    ...(data.jobType === WorkerJobType.EXECUTE_CHAT_AGENT ? { attempts: 1 } : {}),
                     ...isUserInteractionJob(data.jobType) ? {
                         attempts: 1,
                         removeOnComplete: { age: 300 },
@@ -157,6 +159,7 @@ const USER_INTERACTION_JOB_TYPES = new Set([
     WorkerJobType.EXECUTE_VALIDATION,
     WorkerJobType.EXECUTE_TRIGGER_HOOK,
     WorkerJobType.EXECUTE_EXTRACT_PIECE_INFORMATION,
+    WorkerJobType.EXECUTE_TOKEN_REFRESH,
 ])
 
 export function isUserInteractionJob(jobType: WorkerJobType): boolean {

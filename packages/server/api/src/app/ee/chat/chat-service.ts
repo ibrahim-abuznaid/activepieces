@@ -1,16 +1,5 @@
-import {
-    ActivepiecesError,
-    apId,
-    ChatConversation,
-    ChatConversationStatus,
-    ChatHistoryMessage,
-    CreateChatConversationRequest,
-    ErrorCode,
-    PersistedChatMessage,
-    SeekPage,
-    spreadIfDefined,
-    UpdateChatConversationRequest,
-} from '@activepieces/shared'
+import { ActivepiecesError, apId, ErrorCode, SeekPage, spreadIfDefined } from '@activepieces/core-utils'
+import { ChatConversation, ChatConversationStatus, ChatHistoryMessage, CreateChatConversationRequest, PersistedChatMessage, UpdateChatConversationRequest } from '@activepieces/shared'
 import { ModelMessage } from 'ai'
 import { FastifyBaseLogger } from 'fastify'
 import { buildPaginator } from '../../helper/pagination/build-paginator'
@@ -78,7 +67,7 @@ export const chatService = (log: FastifyBaseLogger) => ({
         if (isEvalConversationId(id)) {
             throw new ActivepiecesError({ code: ErrorCode.ENTITY_NOT_FOUND, params: { entityId: id, entityType: 'ChatConversation' } })
         }
-        return chatHelpers.getConversationOrThrow({ id, platformId, userId })
+        return chatHelpers.getConversationOrThrow({ id, platformId, userId, log })
     },
 
     async updateConversation({ id, platformId, userId, request }: UpdateConversationParams): Promise<ChatConversation> {

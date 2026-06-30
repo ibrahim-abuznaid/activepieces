@@ -1,17 +1,18 @@
-import { apId, ExecutionType, FlowRunStatus, FlowVersionState, StreamStepProgress, RunEnvironment } from '@activepieces/shared'
+import { apId } from '@activepieces/core-utils'
+import { ExecutionType, FlowRunStatus, FlowVersionState, RunEnvironment, StreamStepProgress } from '@activepieces/shared'
 import { FastifyInstance } from 'fastify'
 import { distributedStore } from '../../../../../src/app/database/redis-connections'
-import { pubsub } from '../../../../../src/app/helper/pubsub'
-import { engineResponseWatcher } from '../../../../../src/app/workers/engine-response-watcher'
-import { redisMetadataKey, RunsMetadataUpsertData } from '../../../../../src/app/workers/job'
 import { batchDeleteByFlowId } from '../../../../../src/app/flows/flow/flow.jobs'
 import { flowRunSideEffects } from '../../../../../src/app/flows/flow-run/flow-run-side-effects'
 import { waitpointService } from '../../../../../src/app/flows/flow-run/waitpoint/waitpoint-service'
+import { pubsub } from '../../../../../src/app/helper/pubsub'
+import { engineResponseWatcher } from '../../../../../src/app/workers/engine-response-watcher'
+import { redisMetadataKey, RunsMetadataUpsertData } from '../../../../../src/app/workers/job'
 import { createHandlers } from '../../../../../src/app/workers/rpc/worker-rpc-service'
+import { db } from '../../../../helpers/db'
+import { createMockFlow, createMockFlowRun, createMockFlowVersion } from '../../../../helpers/mocks'
 import { createTestContext, TestContext } from '../../../../helpers/test-context'
 import { setupTestEnvironment, teardownTestEnvironment } from '../../../../helpers/test-setup'
-import { createMockFlow, createMockFlowRun, createMockFlowVersion } from '../../../../helpers/mocks'
-import { db } from '../../../../helpers/db'
 
 async function waitForCondition(fn: () => Promise<boolean>, timeoutMs = 5000): Promise<void> {
     const start = Date.now()
@@ -357,7 +358,7 @@ describe('Resume flow run', () => {
 
         await db.update('flow_run', flowRun.id, { status: FlowRunStatus.SUCCEEDED })
         const updatedRun = await db.findOneByOrFail<{ id: string, status: string, projectId: string }>('flow_run', { id: flowRun.id })
-        await flowRunSideEffects(app.log).onFinish(updatedRun as any)
+        await flowRunSideEffects(app.log).onFinish({ flowRun: updatedRun as any, platformId: ctx.platform.id })
 
         const waitpointAfter = await db.findOneBy('waitpoint', { flowRunId: flowRun.id })
         expect(waitpointAfter).toBeNull()

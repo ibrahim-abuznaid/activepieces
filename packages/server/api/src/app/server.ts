@@ -1,6 +1,7 @@
 import path from 'path'
+import { apId, ApMultipartFile, spreadIfDefined } from '@activepieces/core-utils'
 import { apLogger, wideEvent } from '@activepieces/server-utils'
-import { ApEnvironment, apId, ApMultipartFile, maxSocketHttpBufferSizeBytes, spreadIfDefined } from '@activepieces/shared'
+import { ApEnvironment, maxSocketHttpBufferSizeBytes } from '@activepieces/shared'
 import cors from '@fastify/cors'
 import formBody from '@fastify/formbody'
 import fastifyHttpProxy from '@fastify/http-proxy'
@@ -64,7 +65,6 @@ export const setupServer = async (): Promise<FastifyInstance> => {
                 .catch(() => next(new Error('Authentication error')))
         })
         app.io.on('connection', (socket: Socket) => rejectedPromiseHandler(websocketService.init(socket, app!.log), app!.log))
-        app.io.on('disconnect', (socket: Socket) => rejectedPromiseHandler(websocketService.onDisconnect(socket), app!.log))
     }
 
     if (system.isApp()) {

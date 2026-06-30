@@ -1,43 +1,5 @@
-import {
-    ActivepiecesError,
-    ApEdition,
-    ApEnvironment,
-    apId,
-    AppConnection,
-    AppConnectionId,
-    AppConnectionOwners,
-    AppConnectionScope,
-    AppConnectionStatus,
-    AppConnectionType,
-    AppConnectionValue,
-    AppConnectionWithoutSensitiveData,
-    ConnectionState,
-    Cursor,
-    EngineResponse,
-    EngineResponseStatus,
-    ErrorCode,
-    ExecuteValidateAuthResponse,
-    isNil,
-    MAX_PLATFORM_APP_CONNECTION_OWNERS,
-    Metadata,
-    OAuth2GrantType,
-    PlatformAppConnectionOwner,
-    PlatformAppConnectionOwnersResponse,
-    PlatformAppConnectionProjectInfo,
-    PlatformAppConnectionsListItem,
-    PlatformId,
-    PlatformRole,
-    ProjectId,
-    SeekPage,
-    spreadIfDefined,
-    unique,
-    UpsertAppConnectionRequestBody,
-    User,
-    UserId,
-    UserIdentity,
-    UserWithMetaInformation,
-    WorkerJobType,
-} from '@activepieces/shared'
+import { ActivepiecesError, apId, Cursor, ErrorCode, isNil, Metadata, PlatformId, ProjectId, SeekPage, spreadIfDefined, unique, UserId } from '@activepieces/core-utils'
+import { ApEdition, ApEnvironment, AppConnection, AppConnectionId, AppConnectionOwners, AppConnectionScope, AppConnectionStatus, AppConnectionType, AppConnectionValue, AppConnectionWithoutSensitiveData, ConnectionState, EngineResponse, EngineResponseStatus, ExecuteValidateAuthResponse, MAX_PLATFORM_APP_CONNECTION_OWNERS, OAuth2GrantType, PlatformAppConnectionOwner, PlatformAppConnectionOwnersResponse, PlatformAppConnectionProjectInfo, PlatformAppConnectionsListItem, PlatformRole, UpsertAppConnectionRequestBody, User, UserIdentity, UserWithMetaInformation, WorkerJobType } from '@activepieces/shared'
 import { FastifyBaseLogger } from 'fastify'
 import semver from 'semver'
 import { ArrayContains, Equal, FindOperator, FindOptionsWhere, ILike, In } from 'typeorm'
@@ -392,11 +354,11 @@ export const appConnectionService = (log: FastifyBaseLogger) => ({
         log: FastifyBaseLogger,
     ): Promise<AppConnection | null> {
         const appConnection = await appConnectionHandler(log).decryptConnection(encryptedAppConnection)
-        if (!appConnectionHandler(log).needRefresh(appConnection, log)) {
+        if (!await appConnectionHandler(log).needRefresh(appConnection, log)) {
             return oauth2Util(log).removeRefreshTokenAndClientSecret(appConnection)
         }
 
-        const refreshedConnection = await appConnectionHandler(log).lockAndRefreshConnection({ projectId, externalId: appConnection.externalId, log })
+        const refreshedConnection = await appConnectionHandler(log).lockAndRefreshConnection({ platformId: appConnection.platformId, projectId, externalId: appConnection.externalId, log })
         if (isNil(refreshedConnection)) {
             return null
         }

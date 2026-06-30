@@ -1,9 +1,11 @@
+import { ActivepiecesError, assertNotNullOrUndefined, ErrorCode, isNil } from '@activepieces/core-utils'
 import { cryptoUtils } from '@activepieces/server-utils'
-import { ActivepiecesError, ApEdition, ApFlagId, assertNotNullOrUndefined, AuthenticationResponse, ErrorCode, isNil, OtpType, PlatformWithoutSensitiveData, User, UserIdentity, UserIdentityProvider } from '@activepieces/shared'
+import { ApEdition, ApFlagId, AuthenticationResponse, OtpType, PlatformWithoutSensitiveData, User, UserIdentity, UserIdentityProvider } from '@activepieces/shared'
 import { FastifyBaseLogger } from 'fastify'
 import { otpService } from '../ee/authentication/otp/otp-service'
 import { flagService } from '../flags/flag.service'
 import { system } from '../helper/system/system'
+import { AppSystemProp } from '../helper/system/system-props'
 import { platformService } from '../platform/platform.service'
 import { userService } from '../user/user-service'
 import { userInvitationsService } from '../user-invitations/user-invitation.service'
@@ -23,10 +25,12 @@ export const authenticationService = (log: FastifyBaseLogger) => ({
                 email: params.email,
                 platformId,
             })
-            await authenticationUtils(log).assertUserIsInvitedToPlatformOrProject({
-                email: params.email,
-                platformId,
-            })
+            if (system.get(AppSystemProp.ALLOW_OPEN_SIGN_UP) !== 'true') {
+                await authenticationUtils(log).assertUserIsInvitedToPlatformOrProject({
+                    email: params.email,
+                    platformId,
+                })
+            }
             const userIdentity = await userIdentityService(log).create({
                 ...params,
                 verified: true,

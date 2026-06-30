@@ -1,4 +1,5 @@
-import { AlertChannel, ApEdition, assertNotNullOrUndefined, BADGES, InvitationType, isNil, OtpType, UserIdentity, UserInvitation } from '@activepieces/shared'
+import { assertNotNullOrUndefined, isNil } from '@activepieces/core-utils'
+import { AlertChannel, ApEdition, BADGES, InvitationType, OtpType, UserIdentity, UserInvitation } from '@activepieces/shared'
 import { FastifyBaseLogger } from 'fastify'
 import { z } from 'zod'
 import { domainHelper } from '../../../helper/domain-helper'
@@ -191,6 +192,29 @@ export const emailService = (log: FastifyBaseLogger) => ({
         })
     },
 
+    async sendChatNotification({ platformId, to, subject, body, senderName, senderEmail }: SendChatNotificationArgs): Promise<void> {
+        log.info({
+            platform: { id: platformId },
+            recipientCount: to.length,
+            subject,
+        }, '[emailService#sendChatNotification] sending chat notification email')
+
+        await emailSender(log).send({
+            emails: to,
+            platformId,
+            replyTo: senderEmail,
+            templateData: {
+                name: 'chat-notification',
+                vars: {
+                    subject,
+                    body,
+                    senderName,
+                    senderEmail,
+                },
+            },
+        })
+    },
+
     async sendBadgeAwardedEmail(userId: string, badgeName: string): Promise<void> {
         const user = await userService(log).getMetaInformation({ id: userId })
 
@@ -267,6 +291,15 @@ type SendOtpArgs = {
 type SendScimUserWelcomeArgs = {
     email: string
     platformId: string
+}
+
+type SendChatNotificationArgs = {
+    platformId: string
+    to: string[]
+    subject: string
+    body: string
+    senderName: string
+    senderEmail: string
 }
 
 type IssueCreatedArgs = {

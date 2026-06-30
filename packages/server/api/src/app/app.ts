@@ -1,6 +1,7 @@
+import { isNil, spreadIfDefined } from '@activepieces/core-utils'
 import { PieceMetadata } from '@activepieces/pieces-framework'
 import { wideEvent } from '@activepieces/server-utils'
-import { AddAllowedEmbedOriginsRequestBody, ApEdition, ApEnvironment, AppConnectionWithoutSensitiveData, ApplicationEventName, ConnectionDeletedEvent, ConnectionUpsertedEvent, Flow, FlowActivatedEvent, FlowCreatedEvent, FlowDeactivatedEvent, FlowDeletedEvent, FlowPublishedEvent, FlowRun, FlowRunFinishedEvent, FlowRunRetriedEvent, FlowRunStartedEvent, FlowUpdatedEvent, Folder, FolderCreatedEvent, FolderDeletedEvent, FolderUpdatedEvent, GitRepoWithoutSensitiveData, isNil, ProjectMember, ProjectRelease, ProjectReleaseEvent, ProjectRoleEvent, ProjectWithLimits, SigningKeyEvent, SignUpEvent, spreadIfDefined, Template, UserEmailVerifiedEvent, UserInvitation, UserPasswordResetEvent, UserSignedInEvent, UserWithMetaInformation } from '@activepieces/shared'
+import { AddAllowedEmbedOriginsRequestBody, ApEdition, ApEnvironment, AppConnectionWithoutSensitiveData, ApplicationEventName, ConnectionDeletedEvent, ConnectionUpsertedEvent, Flow, FlowActivatedEvent, FlowCreatedEvent, FlowDeactivatedEvent, FlowDeletedEvent, FlowPublishedEvent, FlowRun, FlowRunFinishedEvent, FlowRunRetriedEvent, FlowRunStartedEvent, FlowUpdatedEvent, Folder, FolderCreatedEvent, FolderDeletedEvent, FolderUpdatedEvent, GitRepoWithoutSensitiveData, ProjectMember, ProjectRelease, ProjectReleaseEvent, ProjectRoleEvent, ProjectWithLimits, SigningKeyEvent, SignUpEvent, Template, UserEmailVerifiedEvent, UserInvitation, UserPasswordResetEvent, UserSignedInEvent, UserWithMetaInformation } from '@activepieces/shared'
 import replyFrom from '@fastify/reply-from'
 import swagger from '@fastify/swagger'
 import { createAdapter } from '@socket.io/redis-adapter'
@@ -11,6 +12,7 @@ import { globalRegistry } from 'zod/v4/core'
 import { agentsModule } from './agents/agents-module'
 import { aiProviderService } from './ai/ai-provider-service'
 import { aiProviderModule } from './ai/ai-provider.module'
+import { aiToolConfigModule } from './ai/ai-tool-config.module'
 import { platformAnalyticsModule } from './analytics/platform-analytics.module'
 import { setPlatformOAuthService } from './app-connection/app-connection-service/oauth2'
 import { appConnectionModule } from './app-connection/app-connection.module'
@@ -72,7 +74,9 @@ import { flowModule } from './flows/flow.module'
 import { folderModule } from './flows/folder/folder.module'
 import { domainHelper } from './helper/domain-helper'
 import { exceptionHandler } from './helper/exception-handler'
+import { clientLogsModule } from './helper/logs/client-logs.module'
 import { openapiModule } from './helper/openapi/openapi.module'
+import { rejectedPromiseHandler } from './helper/promise-handler'
 import { system } from './helper/system/system'
 import { AppSystemProp } from './helper/system/system-props'
 import { SystemJobName } from './helper/system-jobs/common'
@@ -96,6 +100,7 @@ import { projectHooks } from './project/project-hooks'
 import { storeEntryModule } from './store-entry/store-entry.module'
 import { tablesModule } from './tables/tables.module'
 import { templateModule } from './template/template.module'
+import { toolSearchReindexJob } from './tool-search/tool-search-reindex.job'
 import { appEventRoutingModule } from './trigger/app-event-routing/app-event-routing.module'
 import { triggerModule } from './trigger/trigger.module'
 import { userBadgeModule } from './user/badges/badge-module'
@@ -209,6 +214,11 @@ export const setupApp = async (app: FastifyInstance): Promise<FastifyInstance> =
     await app.register(storeEntryModule)
     await app.register(folderModule)
     await pieceSyncService(app.log).setup()
+    toolSearchReindexJob(app.log).register()
+    // Cold-start backfill: build the tool-search index once if the flag is on but it has never been
+    // built (existing deployment whose piece_metadata is already populated, so no sync delta fires).
+    // Fire-and-forget — a no-op once the index has rows, and must never block or fail boot.
+    rejectedPromiseHandler(toolSearchReindexJob(app.log).backfillIfEmpty(), app.log)
     await pieceMetadataService(app.log).setup()
     await app.register(pieceModule)
     await app.register(collaborativeModule)
@@ -243,6 +253,14 @@ export const setupApp = async (app: FastifyInstance): Promise<FastifyInstance> =
     await app.register(templateModule)
     await app.register(userBadgeModule)
     await app.register(platformAnalyticsModule)
+
+    // Dev-only: accept browser debug logs into the shared evlog fs drain so a
+    // chat run can be reconstructed end-to-end (web + api + worker). Never in cloud/prod.
+    const clientLogsEnabled = system.get(AppSystemProp.LOG_FILE) === 'true' && system.getEdition() !== ApEdition.CLOUD
+    if (clientLogsEnabled) {
+        await app.register(clientLogsModule)
+    }
+
     systemJobHandlers.registerJobHandler(SystemJobName.DELETE_FLOW, (data) => flowBackgroundJobs(app.log).deleteFlowHandler(data))
     systemJobHandlers.registerJobHandler(SystemJobName.HARD_DELETE_PROJECT, (data) => platformProjectBackgroundJobs(app.log).hardDeleteProjectHandler(data))
 
@@ -302,6 +320,7 @@ export const setupApp = async (app: FastifyInstance): Promise<FastifyInstance> =
             await app.register(embedSubdomainModule)
             await app.register(chatModule)
             await app.register(chatEvalModule)
+            await app.register(aiToolConfigModule)
             setPlatformOAuthService(platformOAuth2Service(app.log))
             projectHooks.set(projectEnterpriseHooks)
             flagHooks.set(enterpriseFlagsHooks)
@@ -334,6 +353,7 @@ export const setupApp = async (app: FastifyInstance): Promise<FastifyInstance> =
             await app.register(embedSubdomainModule)
             await app.register(chatModule)
             await app.register(chatEvalModule)
+            await app.register(aiToolConfigModule)
             setPlatformOAuthService(platformOAuth2Service(app.log))
             projectHooks.set(projectEnterpriseHooks)
             flagHooks.set(enterpriseFlagsHooks)
