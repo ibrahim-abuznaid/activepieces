@@ -23,8 +23,7 @@ Flow Runs records every execution of a flow, tracking its full lifecycle from qu
 - `packages/web/src/app/builder/state/canvas-state.ts` — tracks `userManuallySelectedStepDuringRun` and exposes the `resumeLiveFollow` action for live-follow control
 - `packages/server/api/src/app/ee/alerts/alerts-service.ts` — sends the failure email via the EE Alerts feature (see `.agents/features/alerts.md`)
 - `packages/web/src/features/flow-runs/components/step-status-icon.tsx` — per-step status badge
-- `packages/web/src/app/routes/runs/index.tsx` — runs list page; wraps `RunsTable` in `RunsLayout`
-- `packages/web/src/app/routes/runs/runs-layout.tsx` — shared tab bar over the runs pages: "Flow runs" (`/runs`, this feature) and "Action runs" (`/piece-runs`, the ad-hoc runs table — see `.agents/features/adhoc-run.md`)
+- `packages/web/src/app/routes/runs/index.tsx` — runs list page
 - `packages/web/src/app/routes/runs/id/index.tsx` — individual run detail page
 - `packages/web/src/app/builder/run-details/` — step input/output inspector inside the builder
 - `packages/web/src/app/builder/run-list/` — recent runs sidebar in the builder
@@ -132,6 +131,7 @@ The runs table surfaces a Status multi-select and an "Error message" text input 
 ### Failed-Step Surfaces
 
 - **Runs table failed-step column** renders the failed step's display name with a tooltip showing the truncated, JSON-pretty error message; clicking opens `FailedStepDialog` (full error + "Go to run" footer). Legacy runs without a captured message bypass the dialog and navigate straight to the run page.
+- **Run-details step panel** (`flow-step-input-output.tsx`) resolves `INTERNAL_ERROR` runs by output presence, not run status alone (`INTERNAL_ERROR` is non-terminal under `isFlowRunStateTerminal({ ignoreInternalError: true })`, so it is excluded from the skeleton-loader guard to avoid an infinite skeleton). Platform admins see `InternalErrorPanel` (from `run.internalError`, stripped server-side for non-admins) only when the selected step has no output; a step that ran before the crash still shows its captured output. When there is no output, a "no logs captured, contact support" message is shown to everyone.
 - **Builder run-info widget** shows up to two controls during a run:
   - A "Follow run updates" button — visible only while the run is non-terminal and the user has manually selected a different step. Clicking it calls `resumeLiveFollow`, which clears the `userManuallySelectedStepDuringRun` flag and snaps loop indexes to their latest iteration so the canvas resumes following the engine live.
   - On failure, a "See error" button that focuses the failed step on the canvas via `goToFailedStep` in `run-state`.
