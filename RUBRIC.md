@@ -120,6 +120,18 @@ makes. Names and descriptions are hints, never evidence.
   wave-2 remove-participant WRITEs (remove attendee, remove from list, unlink, remove reaction)
   stand unchanged. (Ruled on google-drive `delete_permissions` / `drive_remove_permission`.)
 
+## Wave-13/14 rulings (approved by Ibrahim 2026-08-21)
+
+- **Storage-product pieces follow the Store rule.** When a piece's product IS the stored
+  collection (the Queue piece, like the Store piece), its own actions are classified by what they
+  do to that collection — append → `WRITE`, consuming pull (items removed and gone from the
+  queue) → `DESTRUCTIVE`, clear → `DESTRUCTIVE`. The AP-internal `context.store` carve-out does
+  not apply to the piece whose feature is that storage. (Ruled on `queue/pull-from-queue` —
+  its own aiMetadata calls it "a destructive consume rather than a peek".)
+- **Refunding a captured payment → `DESTRUCTIVE`.** A refund reverses the capture with no inverse
+  action (nothing can un-refund); precedence-1 cancel/void, even though the order record
+  survives. (Ruled on `webflow/refund_order`.)
+
 ## Output per item
 
 `tag` · `confidence` (high/med/low) · one-line rationale citing `file:line`.
