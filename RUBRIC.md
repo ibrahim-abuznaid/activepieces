@@ -132,6 +132,15 @@ makes. Names and descriptions are hints, never evidence.
   action (nothing can un-refund); precedence-1 cancel/void, even though the order record
   survives. (Ruled on `webflow/refund_order`.)
 
+## Wave-15/16 ruling (approved by Ibrahim 2026-08-22)
+
+- **A dedicated unsubscribe action → `DESTRUCTIVE`.** Unsubscribing a contact is a disable action
+  whose sole purpose is taking the subscription out of service (wave-9 dedicated-disable), even
+  when the member record survives with a status flag and the platform allows re-subscribing.
+  Distinct from removing a tag/marker from a still-subscribed member, which stays `WRITE`.
+  (Ruled on `mailchimp/unsubscribe_email` and `campaign-monitor/unsubscribe_subscriber`,
+  matching `sendfox/unsubscribe` shipped in wave 13.)
+
 ## Output per item
 
 `tag` · `confidence` (high/med/low) · one-line rationale citing `file:line`.
