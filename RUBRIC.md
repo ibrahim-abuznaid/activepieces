@@ -141,6 +141,41 @@ makes. Names and descriptions are hints, never evidence.
   (Ruled on `mailchimp/unsubscribe_email` and `campaign-monitor/unsubscribe_subscriber`,
   matching `sendfox/unsubscribe` shipped in wave 13.)
 
+## Wave-17 rulings (approved by Ibrahim 2026-09-27)
+
+- **Pause → `WRITE`.** A pause action whose effect the piece's own start/resume/enable action
+  reverses is `WRITE`, not a wave-9 dedicated disable. (Ruled on `reachinbox/pauseCampaign` and
+  `reachinbox/pauseWarmup`, overriding the agent's DESTRUCTIVE.)
+- **`CREATE OR REPLACE` DDL → `WRITE`.** Recreating an object definition (a Snowflake dynamic
+  table) is not covered by the wave-2 delete-then-reinsert rule, which stays about content.
+  (Ruled on `snowflake/create_dynamic_table`, overriding the agent's DESTRUCTIVE.)
+- **A caller-supplied query in a language that cannot mutate → `SEARCH`.** When the query
+  language itself is read-only (SOQL sent as `GET /query`), the arbitrary-op WRITE default does
+  not apply; the `arbitrary-op` flag stays. Raw SQL and aggregation pipelines that can write stay
+  `WRITE`. (Ruled on `salesforce/run_query`.)
+- **Wave-4 confirmed for create/update actions.** A required field that offers void, delete,
+  refund or suspend as an ordinary option, or defaults to one, makes the action
+  `DESTRUCTIVE` + `multiplex`, even when the action is named "Create …". (Ruled on
+  `xero/xero_create_invoice`, `shopify/create_transaction`,
+  `invoiceninja/action_recurring_invoice`, `wedof/createGeneralAudit`.)
+- **A status reset is `WRITE`.** Returning a record to an earlier workflow state (e.g. "request
+  being processed") is a status change, not removal. (Ruled on `wedof/resetPartnership`.)
+
+## Wave-18 rulings (approved by Ibrahim 2026-09-27)
+
+- **On/off and start/stop toggles → `WRITE` + `multiplex`.** When one action takes a required
+  on/off or start/stop choice and the same action switches it back, the off state is reversible
+  like a pause (wave-17). (Ruled on `famulor/campaignControl`,
+  `tarvent/tarvent_update_journey_status`, `coralogix/setAlertActive`.) Exception: a toggle whose
+  off state revokes access stays `DESTRUCTIVE` under wave-10 (`ninjapipe/toggle_client_portal`).
+- **Leaving a group or team yourself → `DESTRUCTIVE`.** You lose your own access and need a new
+  invite to rejoin; wave-10 access revocation, not a remove-participant WRITE. (Ruled on
+  `village/leave_group`, `village/leave_team`.)
+- **An AI assistant that can execute tools → `WRITE`.** When the response shows the assistant ran
+  function calls against outside systems, the wave-8 autonomous-agent ruling applies, not the AI
+  inference READ. (Ruled on `famulor/generateAiReply`.) Plain AI replies whose memory/draft
+  writes are default-off checkboxes stay `READ` + `multiplex` (`personal-ai/create_message`).
+
 ## Output per item
 
 `tag` · `confidence` (high/med/low) · one-line rationale citing `file:line`.
