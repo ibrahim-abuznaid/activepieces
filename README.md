@@ -22,3 +22,6 @@ factory triggers carry a `factory` field; they collapse onto one `classification
 `createTrigger` callsite in the PR. `RUBRIC.md` gains the wave-17, wave-18 and wave-19 rulings (9 new).
 
 `wave-19.jsonl` (282 rows): the 27 untagged pieces with a real usage of 1; zagomail's 10 rows are `status: "skipped"` (deprecated since #15452), so 26 pieces ship.
+
+datadog, mysql and snowflake rows are `status: "deferred"`: approved, but held out of #15848 because
+those pieces fail the CI heap check on dependency changes already on `main` (PIE-571).
