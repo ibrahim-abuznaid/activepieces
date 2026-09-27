@@ -176,6 +176,13 @@ makes. Names and descriptions are hints, never evidence.
   inference READ. (Ruled on `famulor/generateAiReply`.) Plain AI replies whose memory/draft
   writes are default-off checkboxes stay `READ` + `multiplex` (`personal-ai/create_message`).
 
+## Wave-19 ruling (approved by Ibrahim 2026-09-27)
+
+- **Refunding a tracking record, not a payment → `WRITE`.** Marking a referral origin as
+  refunded is a status change on the vendor's attribution record; no money moves in that system.
+  The wave-13/14 refund ruling (`DESTRUCTIVE`) stays for reversing a captured payment.
+  (Ruled on `talkable/refund`, overriding the agent's DESTRUCTIVE.)
+
 ## Output per item
 
 `tag` · `confidence` (high/med/low) · one-line rationale citing `file:line`.

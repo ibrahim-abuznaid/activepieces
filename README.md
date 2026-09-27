@@ -19,4 +19,6 @@ pieces in PR B). 2 rows are `status: "skipped"` (Todos, Video AI — cloud-only,
 untagged pieces ranked by usage summed across all published versions, plus the untagged actions
 in jira-cloud, salesforce, quickbooks-desktop-conductor, clay, formio and typeform. Rows from
 factory triggers carry a `factory` field; they collapse onto one `classification` line per
-`createTrigger` callsite in the PR. `RUBRIC.md` gains the wave-17 and wave-18 rulings (8 new).
+`createTrigger` callsite in the PR. `RUBRIC.md` gains the wave-17, wave-18 and wave-19 rulings (9 new).
+
+`wave-19.jsonl` (282 rows): the 27 untagged pieces with a real usage of 1; zagomail's 10 rows are `status: "skipped"` (deprecated since #15452), so 26 pieces ship.
