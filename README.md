@@ -25,3 +25,7 @@ factory triggers carry a `factory` field; they collapse onto one `classification
 
 datadog, mysql and snowflake rows are `status: "deferred"`: approved, but held out of #15848 because
 those pieces fail the CI heap check on dependency changes already on `main` (PIE-571).
+
+2026-09-28, after merging `main`: nocodb and reoon-verifier rows are `status: "superseded"` (tagged on
+`main` in #15865 / #15863; main's tags kept) and straico rows are `status: "skipped"` (deprecated in
+#15875).
