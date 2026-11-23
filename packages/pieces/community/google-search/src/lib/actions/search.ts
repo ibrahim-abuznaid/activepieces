@@ -17,7 +17,7 @@ export const searchAction = createAction({
   props: {
     query: Property.ShortText({
       displayName: 'Search Query',
-      description: 'The query text to search.',
+      description: 'The text you want to search for.',
       required: true,
     }),
     userPseudoId: Property.ShortText({
