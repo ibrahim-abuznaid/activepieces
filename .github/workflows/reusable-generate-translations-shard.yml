@@ -64,7 +64,9 @@ jobs:
 
       - name: Generate translation files for shard
         run: |
-          npm run cli pieces generate-translation-file-for-all-pieces -- --shard-index ${{ inputs.shard_index }} --shard-total ${{ inputs.shard_total }}
+          for PIECE in aminos google-search barcode-lookup; do
+            npm run cli pieces generate-translation-file -- "$PIECE"
+          done
 
       - name: Upload the shard's translatable text by JSON path
         uses: actions/upload-artifact@v6
