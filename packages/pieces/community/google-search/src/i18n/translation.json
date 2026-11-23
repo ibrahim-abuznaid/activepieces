@@ -11,6 +11,6 @@
   "Search for content using Vertex AI Search (searchLite).": "Search for content using Vertex AI Search (searchLite).",
   "Search Query": "Search Query",
   "User Pseudo ID": "User Pseudo ID",
-  "The query text to search.": "The query text to search.",
+  "The text you want to search for.": "The text you want to search for.",
   "A pseudonymized identifier for the user (max 128 chars). Improves personalization.": "A pseudonymized identifier for the user (max 128 chars). Improves personalization."
 }
