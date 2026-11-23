@@ -6,8 +6,8 @@ export const searchByBarcode = createAction({
   auth: barcodeLookupAuth,
   name: 'searchByBarcode',
   classification: 'READ',
-  displayName: 'Search By Barcode',
-  description: 'Search for product information by barcode',
+  displayName: 'Search by Barcode',
+  description: 'Search for product information by barcode.',
   audience: 'both',
   aiMetadata: {
     description:
