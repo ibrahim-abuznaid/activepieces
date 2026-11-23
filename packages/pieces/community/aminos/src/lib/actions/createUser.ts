@@ -18,7 +18,7 @@ export const createUser = createAction({
     }),
     userfriendlyname: Property.ShortText({
       displayName: 'Name of user',
-      description: 'The name of the user',
+      description: 'Full name of the person to create',
       required:true,
     }),
     userplanid: Property.Number({
